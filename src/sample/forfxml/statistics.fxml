@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="662.0" prefWidth="600.0" style="-fx-background-color: #104657;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.StatisticController">
+   <children>
+      <TableView fx:id="tableStat" layoutX="31.0" layoutY="26.0" prefHeight="293.0" prefWidth="366.0">
+        <columns>
+          <TableColumn fx:id="columnName" prefWidth="174.0" text="Name" />
+          <TableColumn fx:id="columnGames" prefWidth="93.0" text="Games" />
+            <TableColumn fx:id="columnGoals" prefWidth="98.0" text="Goals" />
+        </columns>
+      </TableView>
+      <Button fx:id="buttonChange" layoutX="31.0" layoutY="331.0" mnemonicParsing="false" onAction="#change" prefHeight="25.0" prefWidth="76.0" text="Change" />
+      <TextField fx:id="textName" layoutX="121.0" layoutY="331.0" prefHeight="25.0" prefWidth="172.0" />
+   </children>
+</AnchorPane>

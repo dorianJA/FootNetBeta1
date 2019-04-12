@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="465.0" prefWidth="815.0" style="-fx-background-color: #808080;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.connections.clientpack.ClientWindow">
+    <children>
+      <TextField fx:id="sendTextField" layoutX="46.0" layoutY="332.0" prefHeight="25.0" prefWidth="512.0" />
+      <TextField fx:id="textName" layoutX="46.0" layoutY="20.0" prefHeight="25.0" prefWidth="149.0" />
+      <TextArea fx:id="textArea" layoutX="46.0" layoutY="45.0" prefHeight="286.0" prefWidth="512.0" />
+    </children>
+</AnchorPane>

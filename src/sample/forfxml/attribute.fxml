@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="345.0" prefWidth="538.0" style="-fx-background-color: #0e384f;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.AttrController">
+   <children>
+      <Label fx:id="name" layoutX="23.0" layoutY="25.0" text="Name" textFill="#44a5eb">
+         <font>
+            <Font name="Aldrich [RUS by Daymarius]" size="25.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="87.0" text="Характеристики" textFill="#e8bebe" underline="true">
+         <font>
+            <Font name="ljk_Cinzel-Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="121.0" prefHeight="26.0" prefWidth="68.0" text="Удар" textFill="#b5b5b5">
+         <font>
+            <Font name="ljk_Cinzel-Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="150.0" prefHeight="26.0" prefWidth="144.0" text="Контр. мяча" textFill="#b5b5b5">
+         <font>
+            <Font name="ljk_Cinzel-Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="179.0" prefHeight="26.0" prefWidth="119.0" text="Защита" textFill="#b5b5b5">
+         <font>
+            <Font name="ljk_Cinzel-Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="40.0" layoutY="279.0" prefHeight="26.0" prefWidth="119.0" text="ОБЩ" textFill="#b5b5b5">
+         <font>
+            <Font name="French Script MT" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="number" layoutX="444.0" layoutY="263.0" prefHeight="17.0" prefWidth="47.0" text="Номер" textFill="#b5b5b5">
+         <font>
+            <Font name="Aldrich [RUS by Daymarius]" size="30.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="imageView" fitHeight="74.0" fitWidth="95.0" layoutX="415.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="162.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/iconfinder_triangle_85349.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="162.0" layoutY="145.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/iconfinder_triangle_85349.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="162.0" layoutY="173.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/iconfinder_triangle_85349.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="atrHit" layoutX="198.0" layoutY="119.0" prefHeight="28.0" prefWidth="58.0" text="Label" textFill="#a4a4a4">
+         <font>
+            <Font name="Aldrich [RUS by Daymarius]" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="atrContr" layoutX="198.0" layoutY="149.0" prefHeight="28.0" prefWidth="58.0" text="Label" textFill="#a4a4a4">
+         <font>
+            <Font name="Aldrich [RUS by Daymarius]" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="atrDef" layoutX="198.0" layoutY="177.0" prefHeight="28.0" prefWidth="58.0" text="Label" textFill="#a4a4a4">
+         <font>
+            <Font name="Aldrich [RUS by Daymarius]" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="atrAvr" layoutX="41.0" layoutY="243.0" text="Label" textFill="#a4a4a4">
+         <font>
+            <Font name="Aldrich [RUS by Daymarius]" size="30.0" />
+         </font>
+      </Label>
+      <Label layoutX="364.0" layoutY="277.0" prefHeight="26.0" prefWidth="68.0" text="Номер" textFill="#b5b5b5">
+         <font>
+            <Font name="French Script MT" size="20.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="66.0" fitWidth="80.0" layoutX="187.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/icons8-control-of-level-64.png" />
+         </image>
+      </ImageView>
+   </children>
+   <effect>
+      <InnerShadow choke="0.26" color="#6bbed6" height="53.62" radius="20.38" width="29.9" />
+   </effect>
+</AnchorPane>
