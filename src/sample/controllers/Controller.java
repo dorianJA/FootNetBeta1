@@ -12,6 +12,8 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.Person;
@@ -32,9 +34,6 @@ import java.util.HashMap;
 public class Controller implements TCPConnectionListener {
 
     private CollectionPeopleImpl people = new CollectionPeopleImpl();
-    private ObservableList<Person> team1 = FXCollections.observableArrayList();
-    private ObservableList<Person> team2 = FXCollections.observableArrayList();
-    private ObservableList<Person> team3 = FXCollections.observableArrayList();
     private ObservableList<Person> allPlayer = FXCollections.observableArrayList();
 
 
@@ -90,16 +89,18 @@ public class Controller implements TCPConnectionListener {
     private ImageView imageStat;
 
     private JAXBContext context;
-    File file = new File("D:\\foot\\tempXML.xml");
+    private JAXBContext context2;
+    File fileReadyPlayer = new File("D:\\playerReadyXML.xml");
+    File file = new File("\\\\adminsrv\\System.dst\\foot\\tempXML.xml");
+    private CollectionPeopleImpl persons = new CollectionPeopleImpl();
 
-    private HashMap<Integer,Person> mapPerson = new HashMap<>();
 
 
     @FXML
     private void initialize(){
         textArea.setEditable(false);
         textArea.setWrapText(true);
-        textName.setText("Unknown");
+        textName.setText("Введите_Имя");
         teamOneView.setVisible(false);
         teamTwoView.setVisible(false);
         teamThreeView.setVisible(false);
@@ -113,11 +114,9 @@ public class Controller implements TCPConnectionListener {
 
 
         imagePlus.setOnMouseClicked(event -> {
-            if (listView.getSelectionModel().getSelectedItem() != null && !listView.getSelectionModel().getSelectedItem().isReady() && textName.getText().equals("Max")) {  // перенести из одного листа в другой
+            if (listView.getSelectionModel().getSelectedItem() != null && !listView.getSelectionModel().getSelectedItem().isReady() && textName.getText().equals("Max10")) {  // перенести из одного листа в другой
 //                listView.getSelectionModel().getSelectedItem().setReady(true);
 //                playerReady.getItems().add(listView.getSelectionModel().getSelectedItem());
-
-                connection.sendString(listView.getSelectionModel().getSelectedItem()+" добавлен");
                 try {
                     context = JAXBContext.newInstance(Person.class);
                     Marshaller marshaller = context.createMarshaller();
@@ -131,10 +130,9 @@ public class Controller implements TCPConnectionListener {
         });
 
         imageMinus.setOnMouseClicked(event -> {
-            if(playerReady.getSelectionModel().getSelectedItem() !=null && textName.getText().equals("Max")) {
+            if(playerReady.getSelectionModel().getSelectedItem() !=null && textName.getText().equals("Max10")) {
 //                 playerReady.getSelectionModel().getSelectedItem().setReady(false);
 //                connection.sendPerson(playerReady.getSelectionModel().getSelectedItem());
-
                 try {
 
                     context = JAXBContext.newInstance(Person.class);
@@ -187,7 +185,6 @@ public class Controller implements TCPConnectionListener {
                 if(msg.equals("")) return;
                 sendTextField.setText(null);
                 connection.sendString(textName.getText()+ ": " + msg);
-                System.out.println("Controller after sendString client");
                 if(msg.equals("!b")){
                     allP();
                     connection.sendString(teamOneView.getItems()+"\n"+teamTwoView.getItems()+"\n"+teamThreeView.getItems());
@@ -245,17 +242,19 @@ public class Controller implements TCPConnectionListener {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+                textArea.setStyle("-fx-text-fill: green ;");
                 textArea.appendText(msg+"\n");
                 textArea.positionCaret(textArea.getLength());
+
                 if(msg.startsWith("IndexP: ")){
                     String[] indexP = msg.split("\\s");
                     addAll(Integer.parseInt(indexP[1]));
-
                 }
                 else if(msg.startsWith("IndexM: ")){
                     String[] indexM = msg.split("\\s");
                     minusAll(Integer.parseInt(indexM[1]));
                 }
+
 
                 try {
 
@@ -293,6 +292,11 @@ public class Controller implements TCPConnectionListener {
                     playerReady.getItems().add(person);
                     listView.getItems().get(index).setReady(true);
 
+                    persons.getListPeople().add(person);
+                    context2 = JAXBContext.newInstance(CollectionPeopleImpl.class);
+                    Marshaller marshaller = context2.createMarshaller();
+                    marshaller.marshal(persons,fileReadyPlayer);
+
                 }catch (JAXBException e){
                     e.printStackTrace();
                 }
@@ -315,6 +319,11 @@ public class Controller implements TCPConnectionListener {
                             p.setReady(false);
                         }
                     }
+
+                    persons.getListPeople().remove(index);
+                    context2 = JAXBContext.newInstance(CollectionPeopleImpl.class);
+                    Marshaller marshaller = context2.createMarshaller();
+                    marshaller.marshal(persons,fileReadyPlayer);
                 }catch (JAXBException e){
                     e.printStackTrace();
                 }
@@ -422,6 +431,16 @@ public class Controller implements TCPConnectionListener {
 
     @Override
     public void onConnectionReady(TCPConnection tcpConnection) {
+        try {
+            context2 = JAXBContext.newInstance(CollectionPeopleImpl.class);
+            Unmarshaller unmarshaller = context2.createUnmarshaller();
+            persons = (CollectionPeopleImpl) unmarshaller.unmarshal(fileReadyPlayer);
+            playerReady.getItems().addAll(persons.getListPeople());
+
+
+        }catch (JAXBException e){
+            e.printStackTrace();
+        }
         printMsg("Connection ready...");
         printMsg("Команды чата:\n!b - сбалансировать команды\n!c - очистить команды");
     }

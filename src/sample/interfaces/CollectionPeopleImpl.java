@@ -4,7 +4,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sample.Person;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class CollectionPeopleImpl implements CollectionPeople {
+    @XmlElement
     private ObservableList<Person> listPeople = FXCollections.observableArrayList();
 
 
@@ -22,6 +29,8 @@ public class CollectionPeopleImpl implements CollectionPeople {
     public ObservableList<Person> getListPeople(){
         return listPeople;
     }
+
+
 
     public void fillPeopleData(){
         listPeople.add(new Person("Аленчев Максим",96,87,70,"bra",10,2,7));
