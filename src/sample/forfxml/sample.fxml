@@ -10,49 +10,54 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="879.0" prefWidth="911.0" style="-fx-background-color: #104657;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="879.0" prefWidth="911.0" style="-fx-background-color: #2a597a;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.Controller">
    <children>
-      <ListView fx:id="listView" layoutX="14.0" layoutY="106.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="288.0" prefWidth="204.0" style="-fx-background-color: #496973;" AnchorPane.leftAnchor="14.0" />
-      <Button fx:id="balanceButton" layoutX="132.0" layoutY="667.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" text="Сбалансировать" />
-      <ListView fx:id="teamOneView" layoutX="16.0" layoutY="701.0" prefHeight="166.0" prefWidth="170.0" style="-fx-background-color: #c0c0c0;" AnchorPane.leftAnchor="16.0" />
-      <ListView fx:id="teamTwoView" layoutX="194.0" layoutY="701.0" prefHeight="166.0" prefWidth="170.0" style="-fx-background-color: #c0c0c0;" AnchorPane.leftAnchor="194.0" />
-      <ListView fx:id="teamThreeView" layoutX="376.0" layoutY="701.0" prefHeight="166.0" prefWidth="170.0" style="-fx-background-color: #c0c0c0;" AnchorPane.leftAnchor="376.0" />
-      <Label fx:id="teamOneAvr" layoutX="57.0" layoutY="411.0" prefHeight="27.0" prefWidth="118.0" text="Команда 1" textFill="#5286c9">
+      <ListView fx:id="listView" layoutX="14.0" layoutY="106.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="288.0" prefWidth="212.0" style="-fx-background-color: #496973;" AnchorPane.leftAnchor="14.0" />
+      <Button fx:id="balanceButton" layoutX="23.0" layoutY="415.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="109.0" text="Сбалансировать" />
+      <ListView fx:id="teamOneView" layoutX="23.0" layoutY="550.0" prefHeight="166.0" prefWidth="170.0" style="-fx-background-color: #496973;" AnchorPane.leftAnchor="23.0" />
+      <ListView fx:id="teamTwoView" layoutX="221.0" layoutY="550.0" prefHeight="166.0" prefWidth="170.0" style="-fx-background-color: #496973;" AnchorPane.leftAnchor="221.0" />
+      <ListView fx:id="teamThreeView" layoutX="417.0" layoutY="550.0" prefHeight="166.0" prefWidth="170.0" style="-fx-background-color: #496973;" AnchorPane.leftAnchor="417.0" />
+      <Label fx:id="teamOneAvr" layoutX="23.0" layoutY="517.0" prefHeight="27.0" prefWidth="118.0" style="-fx-border-color: #5db4cf; -fx-border-width: 0px 0px 2px 0px;" text="Команда 1" textFill="#043a61">
          <font>
             <Font name="Aldrich [RUS by Daymarius]" size="21.0" />
          </font>
       </Label>
-      <Label fx:id="teamTwoAvr" layoutX="57.0" layoutY="467.0" prefHeight="27.0" prefWidth="118.0" text="Команда 2" textFill="#5286c9">
+      <Label fx:id="teamTwoAvr" layoutX="221.0" layoutY="517.0" prefHeight="27.0" prefWidth="118.0" style="-fx-border-color: #5db4cf; -fx-border-width: 0px 0px 2px 0px;" text="Команда 2" textFill="#043a61">
          <font>
             <Font name="Aldrich [RUS by Daymarius]" size="21.0" />
          </font>
       </Label>
-      <Label fx:id="teamThreeAvr" layoutX="57.0" layoutY="521.0" prefHeight="27.0" prefWidth="118.0" text="Команда 3" textFill="#5286c9">
+      <Label fx:id="teamThreeAvr" layoutX="417.0" layoutY="517.0" prefHeight="27.0" prefWidth="118.0" style="-fx-border-color: #5db4cf; -fx-border-width: 0px 0px 2px 0px;" text="Команда 3" textFill="#043a61">
          <font>
             <Font name="Aldrich [RUS by Daymarius]" size="21.0" />
          </font>
       </Label>
-      <Label layoutX="17.0" layoutY="71.0" prefHeight="27.0" prefWidth="204.0" text="Список игроков" textFill="#5286c9">
+      <Label layoutX="19.0" layoutY="71.0" prefHeight="27.0" prefWidth="204.0" text="Список игроков" textFill="#043a61">
          <font>
             <Font name="Aldrich [RUS by Daymarius]" size="21.0" />
          </font>
       </Label>
-      <Button fx:id="buttonReset" layoutX="14.0" layoutY="667.0" mnemonicParsing="false" onAction="#reset" prefHeight="25.0" prefWidth="109.0" text="Сброс" />
-      <TextArea fx:id="textArea" layoutX="502.0" layoutY="127.0" prefHeight="237.0" prefWidth="386.0" style="-fx-background-color: #1d748f;" />
-      <TextField fx:id="sendTextField" layoutX="502.0" layoutY="367.0" prefHeight="27.0" prefWidth="386.0" style="-fx-background-color: #5db4cf;" />
-      <TextField fx:id="textName" layoutX="502.0" layoutY="102.0" style="-fx-background-color: #5db4cf;" />
-      <ListView fx:id="playerReady" layoutX="289.0" layoutY="106.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="288.0" prefWidth="204.0" style="-fx-background-color: #496973;" />
-      <Button fx:id="buttonExit" layoutX="464.0" layoutY="588.0" mnemonicParsing="false" onAction="#exit" prefHeight="29.0" prefWidth="225.0" style="-fx-background-color: #496973;" text="Выйти из приложения" textFill="#7cb9ff">
+      <Button fx:id="buttonReset" layoutX="23.0" layoutY="451.0" mnemonicParsing="false" onAction="#reset" prefHeight="25.0" prefWidth="109.0" text="Сброс" />
+      <TextArea fx:id="textArea" layoutX="510.0" layoutY="127.0" prefHeight="237.0" prefWidth="386.0" style="-fx-background-color: #1d748f;" />
+      <TextField fx:id="sendTextField" layoutX="510.0" layoutY="367.0" prefHeight="27.0" prefWidth="386.0" promptText="Наберите сообщение" style="-fx-background-color: transparent; -fx-border-color: #5db4cf; -fx-border-width: 0px 0px 2px 0px;">
+         <font>
+            <Font name="Aldrich [RUS by Daymarius]" size="15.0" />
+         </font></TextField>
+      <TextField fx:id="textName" layoutX="511.0" layoutY="93.0" promptText="Введите имя" style="-fx-background-color: transparent; -fx-border-color: #5db4cf; -fx-border-width: 0px 0px 2px 0px;">
+         <font>
+            <Font name="Aldrich [RUS by Daymarius]" size="15.0" />
+         </font></TextField>
+      <ListView fx:id="playerReady" layoutX="289.0" layoutY="106.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="288.0" prefWidth="212.0" style="-fx-background-color: #496973;" />
+      <Button fx:id="buttonExit" layoutX="364.0" layoutY="808.0" mnemonicParsing="false" onAction="#exit" prefHeight="29.0" prefWidth="225.0" style="-fx-background-color: #496973;" text="Выйти из приложения" textFill="#7cb9ff">
          <font>
             <Font name="ljk_Cinzel-Bold" size="15.0" />
          </font></Button>
-      <TextArea fx:id="textAreaAllTeam" layoutX="289.0" layoutY="399.0" prefHeight="166.0" prefWidth="599.0" />
-      <Label layoutX="289.0" layoutY="71.0" prefHeight="27.0" prefWidth="204.0" text="Сегодня играют" textFill="#5286c9">
+      <Label layoutX="297.0" layoutY="71.0" prefHeight="27.0" prefWidth="204.0" text="Сегодня играют" textFill="#043a61">
          <font>
             <Font name="Aldrich [RUS by Daymarius]" size="21.0" />
          </font>
       </Label>
-      <ImageView fitHeight="77.0" fitWidth="85.0" layoutX="476.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="77.0" fitWidth="85.0" layoutX="484.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/icons8-soccer-96.png" />
          </image>
@@ -62,38 +67,38 @@
             <Image url="@../assets/icons8-todo-list-96.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="56.0" fitWidth="54.0" layoutX="206.0" layoutY="397.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="56.0" fitWidth="54.0" layoutX="145.0" layoutY="500.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/icons8-people-96.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="54.0" fitWidth="54.0" layoutX="206.0" layoutY="453.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="54.0" fitWidth="54.0" layoutX="346.0" layoutY="500.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/icons8-people-96.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="56.0" fitWidth="54.0" layoutX="205.0" layoutY="507.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="56.0" fitWidth="54.0" layoutX="542.0" layoutY="500.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/icons8-people-96.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="65.0" fitWidth="65.0" layoutX="651.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="65.0" fitWidth="65.0" layoutX="659.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/icons8-collaboration-96.png" />
          </image>
       </ImageView>
-      <AnchorPane layoutX="1.0" layoutY="13.0" prefHeight="18.0" prefWidth="911.0" style="-fx-background-color: #2b7178;" />
-      <ImageView fx:id="imagePlus" fitHeight="54.0" fitWidth="65.0" layoutX="225.0" layoutY="180.0" pickOnBounds="true" preserveRatio="true">
+      <AnchorPane layoutX="1.0" layoutY="13.0" prefHeight="18.0" prefWidth="911.0" style="-fx-background-color: #083c57;" />
+      <ImageView fx:id="imagePlus" fitHeight="54.0" fitWidth="65.0" layoutX="229.0" layoutY="180.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/icons8-plus-50.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="imageMinus" fitHeight="54.0" fitWidth="65.0" layoutX="226.0" layoutY="242.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imageMinus" fitHeight="54.0" fitWidth="65.0" layoutX="230.0" layoutY="242.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/icons8-minus-50.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="imageStat" fitHeight="85.0" fitWidth="86.0" layoutX="56.0" layoutY="545.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imageStat" fitHeight="85.0" fitWidth="86.0" layoutX="739.0" layoutY="531.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/icons8-ratings-96.png" />
          </image>

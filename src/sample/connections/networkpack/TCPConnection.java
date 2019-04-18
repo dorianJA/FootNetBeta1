@@ -80,15 +80,6 @@ public class TCPConnection {
 
     }
 
-    public synchronized void sendPerson(Person person){
-        try {
-            System.out.println("In writePerson "+person);
-            oos.writeObject(person);
-            oos.flush();
-        } catch (IOException e) {
-            eventListener.onException(TCPConnection.this,e);
-        }
-    }
 
 
 

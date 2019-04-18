@@ -6,16 +6,20 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+
+import org.controlsfx.control.Notifications;
 import sample.Person;
 import sample.connections.networkpack.TCPConnection;
 import sample.connections.networkpack.TCPConnectionListener;
@@ -28,7 +32,6 @@ import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.HashMap;
 
 
 public class Controller implements TCPConnectionListener {
@@ -76,9 +79,6 @@ public class Controller implements TCPConnectionListener {
     private ListView<Person> playerReady;
     @FXML
     private Button buttonReset;
-    @FXML
-    private TextArea textAreaAllTeam;
-
 
 
     @FXML
@@ -88,11 +88,21 @@ public class Controller implements TCPConnectionListener {
     @FXML
     private ImageView imageStat;
 
-    private JAXBContext context;
-    private JAXBContext context2;
-    File fileReadyPlayer = new File("D:\\playerReadyXML.xml");
-    File file = new File("\\\\adminsrv\\System.dst\\foot\\tempXML.xml");
+    private JAXBContext contextTemp;
+    private JAXBContext contextPlayerReady;
+    private JAXBContext contextTeamOne;
+    private JAXBContext contextTeamTwo;
+    private JAXBContext contextTeamThree;
+    private File fileReadyPlayer = new File("\\\\adminsrv\\System.dst\\foot\\playerReadyXML.xml");
+    private File fileTeamOne = new File("\\\\adminsrv\\System.dst\\foot\\teamOneXML.xml");
+    private File fileTeamTwo = new File("\\\\adminsrv\\System.dst\\foot\\teamTwoXML.xml");
+    private File fileTeamThree = new File("\\\\adminsrv\\System.dst\\foot\\teamThreeXML.xml");
+    private File file = new File("\\\\adminsrv\\System.dst\\foot\\tempXML.xml");
     private CollectionPeopleImpl persons = new CollectionPeopleImpl();
+    private CollectionPeopleImpl teamOnelist = new CollectionPeopleImpl();
+    private CollectionPeopleImpl teamTwolist = new CollectionPeopleImpl();
+    private CollectionPeopleImpl teamThreelist = new CollectionPeopleImpl();
+    private Image image = new Image("/sample/assets/qu2.png");
 
 
 
@@ -100,26 +110,17 @@ public class Controller implements TCPConnectionListener {
     private void initialize(){
         textArea.setEditable(false);
         textArea.setWrapText(true);
-        textName.setText("Введите_Имя");
-        teamOneView.setVisible(false);
-        teamTwoView.setVisible(false);
-        teamThreeView.setVisible(false);
+//        textName.setText("Введите_Имя");
 
-
-
-
-
-        textAreaAllTeam.setEditable(false);
-        textAreaAllTeam.setWrapText(true);
 
 
         imagePlus.setOnMouseClicked(event -> {
-            if (listView.getSelectionModel().getSelectedItem() != null && !listView.getSelectionModel().getSelectedItem().isReady() && textName.getText().equals("Max10")) {  // перенести из одного листа в другой
+            if (listView.getSelectionModel().getSelectedItem() != null && !listView.getSelectionModel().getSelectedItem().isReady() && textName.getText().equals("max10")) {  // перенести из одного листа в другой
 //                listView.getSelectionModel().getSelectedItem().setReady(true);
 //                playerReady.getItems().add(listView.getSelectionModel().getSelectedItem());
                 try {
-                    context = JAXBContext.newInstance(Person.class);
-                    Marshaller marshaller = context.createMarshaller();
+                    contextTemp = JAXBContext.newInstance(Person.class);
+                    Marshaller marshaller = contextTemp.createMarshaller();
                     marshaller.marshal(listView.getSelectionModel().getSelectedItem(), file);
                 }catch (JAXBException e){
                     e.printStackTrace();
@@ -130,13 +131,13 @@ public class Controller implements TCPConnectionListener {
         });
 
         imageMinus.setOnMouseClicked(event -> {
-            if(playerReady.getSelectionModel().getSelectedItem() !=null && textName.getText().equals("Max10")) {
+            if(playerReady.getSelectionModel().getSelectedItem() !=null && textName.getText().equals("max10")) {
 //                 playerReady.getSelectionModel().getSelectedItem().setReady(false);
 //                connection.sendPerson(playerReady.getSelectionModel().getSelectedItem());
                 try {
 
-                    context = JAXBContext.newInstance(Person.class);
-                    Marshaller marshaller = context.createMarshaller();
+                    contextTemp = JAXBContext.newInstance(Person.class);
+                    Marshaller marshaller = contextTemp.createMarshaller();
                     marshaller.marshal(playerReady.getSelectionModel().getSelectedItem(), file);
                 }catch (JAXBException e){
                     e.printStackTrace();
@@ -187,7 +188,7 @@ public class Controller implements TCPConnectionListener {
                 connection.sendString(textName.getText()+ ": " + msg);
                 if(msg.equals("!b")){
                     allP();
-                    connection.sendString(teamOneView.getItems()+"\n"+teamTwoView.getItems()+"\n"+teamThreeView.getItems());
+                    connection.sendString("balance");
 
                 }
 //                else if(msg.equals("!c")){
@@ -242,6 +243,7 @@ public class Controller implements TCPConnectionListener {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+
                 textArea.setStyle("-fx-text-fill: green ;");
                 textArea.appendText(msg+"\n");
                 textArea.positionCaret(textArea.getLength());
@@ -254,6 +256,9 @@ public class Controller implements TCPConnectionListener {
                     String[] indexM = msg.split("\\s");
                     minusAll(Integer.parseInt(indexM[1]));
                 }
+                else if(msg.equals("balance")){
+                    addAllTeams();
+                }
 
 
                 try {
@@ -263,6 +268,18 @@ public class Controller implements TCPConnectionListener {
                      if (str[1].equals(" !c")) {
                         reset();
                     }
+                    else if(str[1].equals(" !n")){
+                         Notifications notifications = Notifications.create()
+                                 .title("Оповещение: сегодня футбол")
+                                 .text("Играешь сегодня? Поставь + ")
+                                 .graphic(new ImageView(image))
+                                 .position(Pos.CENTER)
+                                 .darkStyle();
+
+
+                         notifications.show();
+                     }
+
 
 
                 }catch (ArrayIndexOutOfBoundsException e) {
@@ -271,30 +288,48 @@ public class Controller implements TCPConnectionListener {
 
         });
     }
-    private synchronized void printAll(String msg){
+
+    private synchronized void addAllTeams(){
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+                try {
+                    contextTeamOne = JAXBContext.newInstance(CollectionPeopleImpl.class);
+                    Unmarshaller unmarshaller = contextTeamOne.createUnmarshaller();
+                    teamOnelist = (CollectionPeopleImpl) unmarshaller.unmarshal(fileTeamOne);
+                    teamOneView.getItems().setAll(teamOnelist.getListPeople());
 
-                textAreaAllTeam.appendText(msg+"\n");
+                    contextTeamTwo = JAXBContext.newInstance(CollectionPeopleImpl.class);
+                    Unmarshaller unmarshaller1 = contextTeamTwo.createUnmarshaller();
+                    teamTwolist = (CollectionPeopleImpl) unmarshaller1.unmarshal(fileTeamTwo);
+                    teamTwoView.getItems().setAll(teamTwolist.getListPeople());
 
+                    contextTeamThree = JAXBContext.newInstance(CollectionPeopleImpl.class);
+                    Unmarshaller unmarshaller2 = contextTeamThree.createUnmarshaller();
+                    teamThreelist = (CollectionPeopleImpl) unmarshaller2.unmarshal(fileTeamThree);
+                    teamThreeView.getItems().setAll(teamThreelist.getListPeople());
+
+                }catch (JAXBException e){
+                    e.printStackTrace();
+                }
             }
         });
     }
+
     private synchronized void addAll(int index){
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 try {
-                    context = JAXBContext.newInstance(Person.class);
-                    Unmarshaller unmarshaller = context.createUnmarshaller();
+                    contextTemp = JAXBContext.newInstance(Person.class);
+                    Unmarshaller unmarshaller = contextTemp.createUnmarshaller();
                     Person person = (Person) unmarshaller.unmarshal(file);
                     playerReady.getItems().add(person);
                     listView.getItems().get(index).setReady(true);
 
                     persons.getListPeople().add(person);
-                    context2 = JAXBContext.newInstance(CollectionPeopleImpl.class);
-                    Marshaller marshaller = context2.createMarshaller();
+                    contextPlayerReady = JAXBContext.newInstance(CollectionPeopleImpl.class);
+                    Marshaller marshaller = contextPlayerReady.createMarshaller();
                     marshaller.marshal(persons,fileReadyPlayer);
 
                 }catch (JAXBException e){
@@ -310,8 +345,8 @@ public class Controller implements TCPConnectionListener {
             @Override
             public void run() {
                 try {
-                    context = JAXBContext.newInstance(Person.class);
-                    Unmarshaller unmarshaller = context.createUnmarshaller();
+                    contextTemp = JAXBContext.newInstance(Person.class);
+                    Unmarshaller unmarshaller = contextTemp.createUnmarshaller();
                     Person person = (Person) unmarshaller.unmarshal(file);
                     playerReady.getItems().remove(index);
                     for(Person p: listView.getItems()){
@@ -321,8 +356,8 @@ public class Controller implements TCPConnectionListener {
                     }
 
                     persons.getListPeople().remove(index);
-                    context2 = JAXBContext.newInstance(CollectionPeopleImpl.class);
-                    Marshaller marshaller = context2.createMarshaller();
+                    contextPlayerReady = JAXBContext.newInstance(CollectionPeopleImpl.class);
+                    Marshaller marshaller = contextPlayerReady.createMarshaller();
                     marshaller.marshal(persons,fileReadyPlayer);
                 }catch (JAXBException e){
                     e.printStackTrace();
@@ -346,7 +381,9 @@ public class Controller implements TCPConnectionListener {
         teamOneView.getItems().clear();
         teamTwoView.getItems().clear();
         teamThreeView.getItems().clear();
-        textAreaAllTeam.clear();
+        teamOnelist.getListPeople().clear();
+        teamTwolist.getListPeople().clear();
+        teamThreelist.getListPeople().clear();
         //listView.getItems().clear();
         //people.fillPeopleData();
         //listView.setItems(people.getListPeople());
@@ -385,6 +422,7 @@ public class Controller implements TCPConnectionListener {
             }
 
         }
+
     }
 
 
@@ -422,7 +460,33 @@ public class Controller implements TCPConnectionListener {
             return false;
         }
         else {
+            try {
+
+                    teamOnelist.getListPeople().addAll(teamOneView.getItems());
+                    contextTeamOne = JAXBContext.newInstance(CollectionPeopleImpl.class);
+                    Marshaller marshaller = contextTeamOne.createMarshaller();
+                    marshaller.marshal(teamOnelist, fileTeamOne);
+
+
+
+                    teamTwolist.getListPeople().addAll(teamTwoView.getItems());
+                    contextTeamTwo = JAXBContext.newInstance(CollectionPeopleImpl.class);
+                    Marshaller marshaller1 = contextTeamTwo.createMarshaller();
+                    marshaller1.marshal(teamTwolist, fileTeamTwo);
+
+
+
+                    teamThreelist.getListPeople().addAll(teamThreeView.getItems());
+                    contextTeamThree = JAXBContext.newInstance(CollectionPeopleImpl.class);
+                    Marshaller marshaller2 = contextTeamThree.createMarshaller();
+                    marshaller2.marshal(teamThreelist,fileTeamThree);
+
+            }catch (JAXBException e){
+                e.printStackTrace();
+            }
+            System.out.println("All balance");
             return true;
+
         }
 
 
@@ -432,28 +496,37 @@ public class Controller implements TCPConnectionListener {
     @Override
     public void onConnectionReady(TCPConnection tcpConnection) {
         try {
-            context2 = JAXBContext.newInstance(CollectionPeopleImpl.class);
-            Unmarshaller unmarshaller = context2.createUnmarshaller();
+            contextPlayerReady = JAXBContext.newInstance(CollectionPeopleImpl.class);
+            Unmarshaller unmarshaller = contextPlayerReady.createUnmarshaller();
             persons = (CollectionPeopleImpl) unmarshaller.unmarshal(fileReadyPlayer);
             playerReady.getItems().addAll(persons.getListPeople());
+
+            contextTeamOne = JAXBContext.newInstance(CollectionPeopleImpl.class);
+            Unmarshaller unmarshaller1 = contextTeamOne.createUnmarshaller();
+            teamOnelist = (CollectionPeopleImpl) unmarshaller1.unmarshal(fileTeamOne);
+            teamOneView.getItems().setAll(teamOnelist.getListPeople());
+
+            contextTeamTwo = JAXBContext.newInstance(CollectionPeopleImpl.class);
+            Unmarshaller unmarshaller2 = contextTeamTwo.createUnmarshaller();
+            teamTwolist = (CollectionPeopleImpl) unmarshaller2.unmarshal(fileTeamTwo);
+            teamTwoView.getItems().setAll(teamTwolist.getListPeople());
+
+            contextTeamThree = JAXBContext.newInstance(CollectionPeopleImpl.class);
+            Unmarshaller unmarshaller3 = contextTeamThree.createUnmarshaller();
+            teamThreelist = (CollectionPeopleImpl) unmarshaller3.unmarshal(fileTeamThree);
+            teamThreeView.getItems().setAll(teamThreelist.getListPeople());
 
 
         }catch (JAXBException e){
             e.printStackTrace();
         }
         printMsg("Connection ready...");
-        printMsg("Команды чата:\n!b - сбалансировать команды\n!c - очистить команды");
+        printMsg("Команды чата:\n!b - сбалансировать команды\n!c - очистить команды\n!n - оповещение всем");
     }
 
     @Override
     public void onRecieveString(TCPConnection tcpConnection, String value) {
-        if(value.startsWith("[") || value.startsWith("]") || value.startsWith(",")){
-            printAll(value);
-        }
-        else {
-            printMsg(value);
-        }
-
+        printMsg(value);
     }
 
     @Override

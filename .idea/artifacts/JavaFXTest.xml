@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="javafx" name="JavaFXTest">
+  <artifact type="javafx" build-on-make="true" name="JavaFXTest">
     <output-path>D:/foot</output-path>
     <properties id="javafx-properties">
       <options>
